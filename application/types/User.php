@@ -7,6 +7,8 @@ class User
     public int $email;
     public string $password;
 
+    public array $blacklists = ['id', 'blacklists'];
+
     public function __construct(array $val)
     {
         foreach ($val as $k => $d) {

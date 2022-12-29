@@ -21,8 +21,8 @@ class Welcome extends CI_Controller
      */
     public function index()
     {
-        $this->load->view('welcome_message');
         load_types('Dosen');
+        $this->load->view('welcome_message');
         var_dump((new ReflectionClass(new Dosen([])))->getProperties()[3]->getType()->getName());
     }
 

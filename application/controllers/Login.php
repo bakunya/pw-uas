@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+// var_dump((new ReflectionClass(nepw User([])))->getProperties()[3]->getType()->getName());
+
+
 class Login extends CI_Controller
 {
     public function __construct()
@@ -10,9 +13,16 @@ class Login extends CI_Controller
     }
 
     public function index()
-    {
-        if ($this->session->userdata('logged') !== TRUE) return $this->load->view('auth/login');
-        return redirect(base_url('home'));
+    {       
+        load_types('RpsPelaksanaanPembelajaran');
+
+        $this->load->view('_partials/form', [
+            'action' => base_url('login/post')
+        ]);
+        $this->uiform->set_class(new RpsPelaksanaanPembelajaran([
+            'waktu' => 100
+        ]))->build($this->load);
+        $this->load->view('_partials/endform');
     }
 
     public function logout()
