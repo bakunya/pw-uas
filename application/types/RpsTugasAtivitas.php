@@ -9,7 +9,9 @@ class RpsTugasAktivitas
     public string $kemampuan_akhir;
     public string $waktu;
 
-    public function __construct(array $val)
+    public array $blacklists = ['id', 'id_rps', 'blacklists'];
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;

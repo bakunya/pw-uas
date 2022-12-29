@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UIForm {
+class UIForm
+{
     private $class;
     private ReflectionClass $reflect;
     private array $blacklists;
@@ -14,32 +15,48 @@ class UIForm {
         return $this;
     }
 
+    public function converting_type($type)
+    {
+        switch (strtolower($type)) {
+            case 'int':
+                return 'number';
+            case 'rpsdate':
+                return 'date';
+            case 'rpsemail':
+                return 'email';
+            case 'rpspassword':
+                return 'password';
+            default:
+                return 'string';
+        }
+    }
+
+    public function getValue(ReflectionProperty $val)
+    {
+        if (!$val->isInitialized($this->class)) return null;
+        $v = $val->getValue($this->class);
+        if ($v instanceof RpsDate || $v instanceof RpsEmail || $v instanceof RpsPassword) return $v->value;
+        return $v;
+    }
+
     public function build($load)
     {
         foreach ($this->reflect->getProperties() as $k => $v) {
             $name = $v->getName();
             $shouldRender = true;
-            
+
             foreach ($this->blacklists as $key => $val) {
-                if($name === $val) {
+                if ($name === $val) {
                     $shouldRender = false;
                     break;
                 }
             }
 
-            if($shouldRender) {
+            if ($shouldRender) {
                 $type = $v->getType()->getName();
                 $title = ucfirst(str_replace('_', ' ', $name));
-                $value = $v->isInitialized($this->class) ? $v->getValue($this->class) : null;
-                
-                switch(strtolower($type)) {
-                    case 'int':
-                        $type = 'number';
-                        break;
-                    default:
-                        $type = 'string';
-                        break;
-                }
+                $value = $this->getValue($v);
+                $type = $this->converting_type($type);
 
                 $load->view('_partials/input', [
                     'name' => $name,
@@ -48,7 +65,6 @@ class UIForm {
                     'value' => $value,
                 ]);
             }
-
         }
     }
 }

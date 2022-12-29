@@ -13,10 +13,10 @@ class RpsPelaksanaanPembelajaran
     public string $topik;
     public string $strategi_belajar;
 
-    private array $blacklists = ['id', 'id_rps', 'blacklists'];
+    public array $blacklists = ['id', 'id_rps', 'blacklists'];
 
 
-    public function __construct(array $val)
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;

@@ -13,8 +13,10 @@ class RpsUnitPembelajaran
     public string $metode_penilaian;
     public string $bahan_ajar;
 
+    public array $blacklists = ['id', 'id_rps', 'blacklists'];
 
-    public function __construct(array $val)
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;

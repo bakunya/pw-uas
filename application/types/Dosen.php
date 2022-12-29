@@ -8,7 +8,9 @@ class Dosen
     public int $id_user;
     public string $nama;
 
-    public function __construct(array $val)
+    public array $blacklists = ['id', 'id_user', 'blacklists'];
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;
