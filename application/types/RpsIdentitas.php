@@ -9,8 +9,10 @@ class RpsIdentitas
     public string $bobot_sks;
     public string $detail_penilaian;
 
+    public array $blacklists = ['id', 'id_rps', 'blacklists'];
 
-    public function __construct(array $val)
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;

@@ -8,8 +8,10 @@ class RpsTugasAtivitasBobotKriteria
     public string $bobot;
     public string $kriteria_penilaian;
 
+    public array $blacklists = ['id', 'id_rps_tugas_aktivitas', 'blacklists'];
 
-    public function __construct(array $val)
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;

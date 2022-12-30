@@ -13,16 +13,40 @@ class Login extends CI_Controller
     }
 
     public function index()
-    {       
-        load_types('RpsPelaksanaanPembelajaran');
+    {
+        load_types('RpsUnitPembelajaran');
 
-        $this->load->view('_partials/form', [
-            'action' => base_url('login/post')
-        ]);
-        $this->uiform->set_class(new RpsPelaksanaanPembelajaran([
-            'waktu' => 100
-        ]))->build($this->load);
-        $this->load->view('_partials/endform');
+        wrapper(
+            $this->load,
+            'head',
+            function () {
+                wrapper(
+                    $this->load,
+                    'container',
+                    function () {
+                        wrapper(
+                            $this->load,
+                            'form',
+                            function () {
+                                $this->uiform->set_class(new RpsUnitPembelajaran())->build($this->load);
+                            },
+                            [
+                                [
+                                    'action' => base_url('login/post'),
+                                    'title' => 'Login'
+                                ]
+                            ]
+                        );
+                    }
+                );
+            },
+            [
+                [],
+                [
+                    'js' => ['pass.js']
+                ]
+            ]
+        );
     }
 
     public function logout()
@@ -31,8 +55,11 @@ class Login extends CI_Controller
         return redirect(base_url('login'));
     }
 
-    
-    public function auth1() {die('lllll');}    
+
+    public function auth1()
+    {
+        die('lllll');
+    }
 
     public function auth()
     {
@@ -51,8 +78,7 @@ class Login extends CI_Controller
                     $id = $x['id'];
                     if ($x['akses'] == '1') { //Administrator
                         $name = $x['name'];
-                        $this->session->set_userdata('access', 'Administrator');
-                        ;
+                        $this->session->set_userdata('access', 'Administrator');;
                         $this->session->set_userdata('id', $id);
                         $this->session->set_userdata('name', $name);
                         redirect(base_url('home'));
@@ -70,8 +96,7 @@ class Login extends CI_Controller
                         redirect(base_url('home'));
                     }
                 } else {
-                    $url = base_url('login');
-                    ;
+                    $url = base_url('login');;
                     echo $this->session->set_flashdata('msg', '<span
                     onclick="this.parentElement.style.display=`none`" class="w3-button w3-large w3-displaytopright">&times;</span>
                         <h3>Uupps!</h3>

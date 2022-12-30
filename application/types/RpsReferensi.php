@@ -7,7 +7,9 @@ class RpsReferensi
     public int $id_rps;
     public string $body;
 
-    public function __construct(array $val)
+    public array $blacklists = ['id', 'id_rps', 'blacklists'];
+
+    public function __construct(array $val = [])
     {
         foreach ($val as $k => $d) {
             $this->{$k} = $d;
