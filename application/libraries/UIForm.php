@@ -39,7 +39,7 @@ class UIForm
         return $v;
     }
 
-    public function build($load)
+    public function build(CI_Loader $load)
     {
         foreach ($this->reflect->getProperties() as $k => $v) {
             $name = $v->getName();
