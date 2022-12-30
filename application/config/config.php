@@ -26,7 +26,7 @@ include APPPATH . '/traits/template.php';
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'www.miku.jp';
+$config['base_url'] = 'localhost/pw-uas';
 
 /*
 |--------------------------------------------------------------------------
