@@ -1,8 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// load traits template
-include APPPATH . '/traits/template.php';
+/**
+ * Load traits
+ */
+include APPPATH . 'traits/template.php';
+include APPPATH . 'traits/forController.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,7 @@ include APPPATH . '/traits/template.php';
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'localhost/pw-uas';
+$config['base_url'] = 'http://miku.jp';
 
 /*
 |--------------------------------------------------------------------------

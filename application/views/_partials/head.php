@@ -11,7 +11,17 @@
             <link rel="stylesheet" href="<?= public_file($c) ?>">
         <?php endforeach; ?>
     <?php endif; ?>
+    <style>
+        .fs-xs {
+            font-size: 10px;
+        }
+    </style>
     <title><?= $title ?? 'Miku-chan' ?></title>
 </head>
 
 <body>
+    <?php if (null !== ($this->session->flashdata('message'))) : ?>
+        <script>
+            alert('<?= $this->session->flashdata('message') ?>');
+        </script>
+    <?php endif; ?>

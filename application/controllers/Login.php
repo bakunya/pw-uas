@@ -1,4 +1,7 @@
 <?php
+
+use application\traits\forController;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 // var_dump((new ReflectionClass(nepw User([])))->getProperties()[3]->getType()->getName());
@@ -6,16 +9,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
+    use forController;
+
     public UIForm $uiform;
-    
+
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('ModelUser', 'ModelUser');
+        $this->load->model('ModelData', 'model_data');
+        $this->load->model('ModelUser', 'model_user');
     }
 
     public function index()
     {
+        $this->guess_method('get');
+        $this->should_guess();
+
         load_types('User', 'RpsEmail', 'RpsPassword');
 
         wrapper(
@@ -39,6 +48,7 @@ class Login extends CI_Controller
                                 ]
                             ]
                         );
+                        $this->load->view('_partials/login_footer_form');
                     }
                 );
             },
@@ -53,7 +63,21 @@ class Login extends CI_Controller
 
     public function post()
     {
-        
+        $this->should_guess();
+        $this->guess_method('post');
+        load_types('User', 'RpsPassword', 'RpsEmail');
+        $user = new User($_POST);
+        $user_db = $this->model_user->get_with_dosen(['email' => $user->email->value]);
+        $user_db = $user_db->num_rows() > 0 ? $user_db->row_array() : show_error('Incorrect password or email', 403, 'Login fails.');
+        $compare = hash_verify($user->password->value, $user_db['password'] ?? '');
+        if (!$compare) return show_error('Incorrect password or email', 403, 'Login fails.');
+        $this->session->set_userdata([
+            'id' => $user_db['id'],
+            'email' => $user_db['email'],
+            'id_dosen' => $user_db['id_dosen'],
+        ]);
+        $this->session->set_flashdata('message', 'Berhasil masuk');
+        return redirect('dashboard');
     }
 
     public function logout()
@@ -61,88 +85,4 @@ class Login extends CI_Controller
         $this->session->sess_destroy();
         return redirect(base_url('login'));
     }
-
-
-    // public function auth1()
-    // {
-    //     die('lllll');
-    // }
-
-    // public function auth()
-    // {
-    //     $email = $this->input->post('email');
-    //     $password = $this->input->post('pass');
-
-    //     $validasi_email = $this->ModelUser->query_validasi_email($email);
-
-    //     if ($validasi_email->num_rows() > 0) {
-    //         $validate_ps = $this->ModelUser->query_validasi_password($email, $password);
-    //         if ($validate_ps->num_rows() > 0) {
-    //             $x = $validate_ps->row_array();
-    //             if ($x['status'] == '1') {
-    //                 $this->session->set_userdata('logged', TRUE);
-    //                 $this->session->set_userdata('user', $email);
-    //                 $id = $x['id'];
-    //                 if ($x['akses'] == '1') { //Administrator
-    //                     $name = $x['name'];
-    //                     $this->session->set_userdata('access', 'Administrator');;
-    //                     $this->session->set_userdata('id', $id);
-    //                     $this->session->set_userdata('name', $name);
-    //                     redirect(base_url('home'));
-    //                 } else if ($x['akses'] == '2') { //Dosen
-    //                     $name = $x['name'];
-    //                     $this->session->set_userdata('access', 'Dosen');
-    //                     $this->session->set_userdata('id', $id);
-    //                     $this->session->set_userdata('name', $name);
-    //                     redirect(base_url('home'));
-    //                 } else if ($x['akses'] == '3') { //Mahasiswa
-    //                     $name = $x['name'];
-    //                     $this->session->set_userdata('access', 'Mahasiswa');
-    //                     $this->session->set_userdata('id', $id);
-    //                     $this->session->set_userdata('name', $name);
-    //                     redirect(base_url('home'));
-    //                 }
-    //             } else {
-    //                 $url = base_url('login');;
-    //                 echo $this->session->set_flashdata('msg', '<span
-    //                 onclick="this.parentElement.style.display=`none`" class="w3-button w3-large w3-displaytopright">&times;</span>
-    //                     <h3>Uupps!</h3>
-    //                     <p>Akun kamu telah di blokir. Silahkan hubungi operator.</p>');
-    //                 redirect($url);
-    //             }
-    //         } else {
-    //             $url = base_url('login');
-    //             echo $this
-    //                 ->session
-    //                 ->set_flashdata(
-    //                     'msg',
-    //                     '<span 
-    //                         onclick="this.parentElement.style.display=`none`" 
-    //                         class="w3-button w3-large w3-displaytopright"
-    //                     >
-    //                         &times;
-    //                     </span>
-    //                     <h3>Uupps!</h3>
-    //                     <p>Password yang kamu masukan salah jon.</p>'
-    //                 );
-    //             redirect($url);
-    //         }
-    //     } else {
-    //         $url = base_url('login');
-    //         echo $this
-    //             ->session
-    //             ->set_flashdata(
-    //                 'msg',
-    //                 '<span 
-    //                         onclick="this.parentElement.style.display=`none`" 
-    //                         class="w3-button w3-large w3-displaytopright"
-    //                     >
-    //                         &times;
-    //                     </span>
-    //                     <h3>Uupps!</h3>
-    //                     <p>Password yang kamu masukan salah jon.</p>'
-    //             );
-    //         redirect($url);
-    //     }
-    // }
 }

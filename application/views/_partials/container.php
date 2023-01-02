@@ -1,1 +1,1 @@
-<section class="container-fluid p-5">
+<section class="<?= $classname ?? 'container-fluid p-5' ?>">

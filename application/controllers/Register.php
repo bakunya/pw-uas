@@ -1,8 +1,13 @@
 <?php
+
+use application\traits\forController;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Register extends CI_Controller
 {
+    use forController;
+
     public UIForm $uiform;
     public ModelUser $model_user;
     public ModelDosen $model_dosen;
@@ -17,31 +22,22 @@ class Register extends CI_Controller
 
     public function index()
     {
+        $this->guess_method('get');
+
         load_types('User', 'Dosen', 'RpsEmail', 'RpsDate', 'RpsEmail', 'RpsPassword');
-        
-        $this->model_dosen->create_dosen_and_user(
-            new Dosen([
-                'nik' => 123123123123,
-                'name' => 'Miku chan'
-            ]), 
-            new User([
-                'enail' => 'miku@email.com',
-                'password' => 'loremipsum',
-            ])
-        );
 
         wrapper(
             $this->load,
             'head',
-            function() {
+            function () {
                 wrapper(
                     $this->load,
                     'container',
-                    function() {
+                    function () {
                         wrapper(
                             $this->load,
                             'form',
-                            function() {
+                            function () {
                                 $this->uiform->set_class(new Dosen())->build($this->load);
                                 $this->uiform->set_class(new User())->build($this->load);
                             },
@@ -52,6 +48,7 @@ class Register extends CI_Controller
                                 ]
                             ]
                         );
+                        $this->load->view('_partials/register_footer_form');
                     },
                 );
             },
@@ -64,6 +61,20 @@ class Register extends CI_Controller
 
     public function post()
     {
-        $this->load->view('welcome_message');
+        $this->guess_method('post');
+        load_types('User', 'Dosen', 'RpsEmail', 'RpsDate', 'RpsEmail', 'RpsPassword');
+
+        $user = new User($_POST);
+        $dosen = new Dosen($_POST);
+
+        $user->password->value = hashing($user->password->value);
+
+        try {
+            $this->model_dosen->create_dosen_and_user($dosen, $user);
+            $this->session->set_flashdata('message', 'Berhasil mendaftar');
+            return redirect(base_url('login'));
+        } catch (\Throwable $th) {
+            return show_error('Something went wrong', 500, 'Something went wrong');
+        }
     }
 }

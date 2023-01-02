@@ -1,0 +1,1 @@
+<p class="text-center mt-5">Belum punya akun? <a href="<?= base_url('register') ?>">daftar di sini.</a></p>

@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class ModelDosen extends CI_Model
-{    
+{
     public function __construct()
     {
         parent::__construct();
@@ -13,28 +13,11 @@ class ModelDosen extends CI_Model
     {
         $dosen = unset_blacklists($dosen);
         $user = unset_blacklists($user);
-        
-        $this->db->trans_start();
-        die(json_encode($user));
-        $this->db->insert('user', $user);
 
-        $id_user = $this->db->insert_id();
-
-        $this->db->insert('dosen', new Dosen([
-            ...$dosen,
-            'id_user' => $id_user,
-        ]));
-
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-        } else {
-            $this->db->trans_commit();
-        }
-
-
-        die();
+        $this->db->query("begin;");
+        $this->db->query("INSERT INTO user (`email`, `password`) VALUES ('" . $user['email'] . "', '" . $user['password'] . "');");
+        $this->db->query("INSERT INTO dosen (`id_user`, `nik`, `nama`) VALUES ((select LAST_INSERT_ID()), '" . $dosen['nik'] . "', '" . $dosen['nama'] . "');");
+        $this->db->query("commit;");
     }
 
     public function query_validasi_email($email)

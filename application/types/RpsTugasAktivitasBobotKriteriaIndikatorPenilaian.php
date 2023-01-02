@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class RpsTugasAtivitasBobotKriteriaIndikatorPenilaian
+class RpsTugasAktivitasBobotKriteriaIndikatorPenilaian
 {
     public int $id;
     public int $id_rps_tugas_aktivitas_bobot_kriteria;
