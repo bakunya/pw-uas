@@ -20,7 +20,7 @@ class Formviews extends CI_Controller
 
     public function store()
     {
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guad_dynamic_creation(@$_GET['types']);
         $this->guess_method('get');
         $this->should_auth();
         $ref = @$_GET['ref'];
@@ -109,7 +109,7 @@ class Formviews extends CI_Controller
     public function store_rps()
     {
         $this->session->sess_destroy();
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guad_dynamic_creation(@$_GET['types']);
         $this->guess_method('get');
         $this->should_auth();
 

@@ -8,7 +8,7 @@ trait forController
 {
     public function guad_dynamic_creation($types)
     {
-        if (strtolower($types) === 'dosen' || strtolower($types) === 'user' || strtolower($types) === 'rps') return show_error('Unauthorize for this actions', 403);
+        if (strtolower($types ?? '') === 'dosen' || strtolower($types ?? '') === 'user' || strtolower($types ?? '') === 'rps') return show_error('Unauthorize for this actions', 403);
         return true;
     }
 
