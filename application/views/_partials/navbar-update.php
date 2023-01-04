@@ -3,6 +3,6 @@
         <a class="navbar-brand" href="<?= base_url() ?>">
             <strong>RPS</strong>
         </a>
-        <a href="<?= base_url('formviews/store_rps') ?>" class="btn btn-primary">Buat RPS</a>
+        <a href="<?= base_url('formviews/update_rps?curr_id=') . ($_GET['curr_id'] ?? '') ?>" class="btn btn-success">Update RPS</a>
     </div>
 </nav>

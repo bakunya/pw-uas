@@ -4,9 +4,6 @@ use application\traits\forController;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// var_dump((new ReflectionClass(nepw User([])))->getProperties()[3]->getType()->getName());
-
-
 class Login extends CI_Controller
 {
     use forController;

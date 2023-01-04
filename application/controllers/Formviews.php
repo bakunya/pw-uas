@@ -20,11 +20,15 @@ class Formviews extends CI_Controller
 
     public function store()
     {
-        $this->guad_dynamic_creation(@$_GET['types']);
+        $this->guard_dynamic_creation(@$_GET['types']);
         $this->guess_method('get');
         $this->should_auth();
+
         $ref = @$_GET['ref'];
         $types = @$_GET['types'];
+
+        $this->guard_empty($ref);
+        $this->guard_empty($types);
 
         load_types($types);
 
@@ -63,11 +67,15 @@ class Formviews extends CI_Controller
 
     public function update()
     {
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guard_dynamic_creation(@$_POST['types']);
         $this->guess_method('get');
         $this->should_auth();
+
         $types = @$_GET['types'];
         $curr_id = @$_GET['curr_id'];
+
+        $this->guard_empty($types);
+        $this->guard_empty($curr_id);
 
         $curr_data = ((array)$this->model_data->get(to_snakecase($types), ['id' => $curr_id])?->row()) ?? null;
 
@@ -90,7 +98,7 @@ class Formviews extends CI_Controller
                             [
                                 [
                                     'action' => base_url('formactions/update?types=' . $types . '&curr_id=' . $curr_data['id']),
-                                    'title' => 'Buat ' . to_titlecase($types),
+                                    'title' => 'Update ' . to_titlecase($types),
                                 ]
                             ]
                         );
@@ -108,8 +116,7 @@ class Formviews extends CI_Controller
 
     public function store_rps()
     {
-        $this->session->sess_destroy();
-        $this->guad_dynamic_creation(@$_GET['types']);
+        $this->guard_dynamic_creation(@$_GET['types']);
         $this->guess_method('get');
         $this->should_auth();
 
@@ -168,11 +175,12 @@ class Formviews extends CI_Controller
 
     public function update_rps()
     {
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guard_dynamic_creation(@$_POST['types']);
         $this->guess_method('get');
         $this->should_auth();
 
         $curr_id = @$_GET['curr_id'];
+        $this->guard_empty($curr_id);
 
         $curr_rps = ((array)$this->model_data->get('rps', ['id' => $curr_id])?->row()) ?? null;
 

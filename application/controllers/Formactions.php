@@ -31,11 +31,15 @@ class Formactions extends CI_Controller
 
     public function store()
     {
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guard_dynamic_creation(@$_POST['types']);
         $this->guess_method('post');
         $this->should_auth();
+
         $ref = @$_GET['ref'];
         $types = @$_GET['types'];
+
+        $this->guard_empty($ref);
+        $this->guard_empty($types);
 
         load_types($types);
         $instance = new $types($_POST);
@@ -46,17 +50,22 @@ class Formactions extends CI_Controller
         $this->model_data->store(to_snakecase($types), $obj);
 
         $this->session->set_flashdata('message', 'Data Berhasil dibuat');
-        return redirect(base_url('dashboard'));
+        // return redirect(base_url('dashboard'));
+        return redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function update()
     {
-        $this->guad_dynamic_creation(@$_POST['types']);
+        $this->guard_dynamic_creation(@$_POST['types']);
         $this->guess_method('post');
         $this->should_auth();
+
         $types = @$_GET['types'];
         $curr_id = @$_GET['curr_id'];
         $_POST['id'] = $curr_id;
+
+        $this->guard_empty($curr_id);
+        $this->guard_empty($types);
 
         load_types($types);
 
@@ -66,7 +75,8 @@ class Formactions extends CI_Controller
         $this->model_data->update(to_snakecase($types), $obj, $curr_id);
 
         $this->session->set_flashdata('message', 'Data Berhasil dibuat');
-        return redirect(base_url('dashboard'));
+        // return redirect(base_url('dashboard'));
+        return redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function store_rps()
@@ -82,9 +92,31 @@ class Formactions extends CI_Controller
     {
         load_types('Rps');
         $_POST['id'] = $_GET['curr_id'];
+        $this->guard_empty($_POST['id']);
         $obj = new Rps($_POST);
         $this->model_data->update('rps', unset_blacklists($obj));
         $this->session->set_flashdata('message', 'RPS Berhasil diupdate');
         return redirect(base_url('dashboard'));
+    }
+
+    public function delete()
+    {
+        $this->guess_method('post');
+        $this->should_auth();
+
+        $types = @$_GET['types'];
+        $curr_id = @$_GET['curr_id'];
+        $_POST['id'] = $curr_id;
+
+        $this->guard_empty($curr_id);
+        $this->guard_empty($types);
+
+        load_types($types);
+
+        $this->model_data->delete(to_snakecase($types), ['id' => $curr_id]);
+
+        $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+        // return redirect(base_url('dashboard'));
+        return redirect($_SERVER['HTTP_REFERER']);
     }
 }

@@ -15,6 +15,11 @@
         .fs-xs {
             font-size: 10px;
         }
+
+        .w-fit {
+            width: fit-content;
+            width: -moz-fit-content;
+        }
     </style>
     <title><?= $title ?? 'Miku-chan' ?></title>
 </head>

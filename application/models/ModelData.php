@@ -31,6 +31,11 @@ class ModelData extends CI_Model
         return $this->db->insert($table, $value);
     }
 
+    public function delete($table, $filters)
+    {
+        return $this->db->delete($table, $filters);
+    }
+
     public function update($table, $value)
     {
         $this->db->where('id', $value['id']);
