@@ -14,6 +14,7 @@ class ModelDosen extends CI_Model
         $dosen = unset_blacklists($dosen);
         $user = unset_blacklists($user);
 
+
         $this->db->query("begin;");
         $this->db->query("INSERT INTO user (`email`, `password`) VALUES ('" . $user['email'] . "', '" . $user['password'] . "');");
         $this->db->query("INSERT INTO dosen (`id_user`, `nik`, `nama`) VALUES ((select LAST_INSERT_ID()), '" . $dosen['nik'] . "', '" . $dosen['nama'] . "');");

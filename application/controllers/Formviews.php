@@ -137,7 +137,6 @@ class Formviews extends CI_Controller
                             $this->load,
                             'form',
                             function () use ($dosen) {
-
                                 $this->load->view('_partials/select', [
                                     'name' => 'id_dosen',
                                     'title' => 'Dosen',

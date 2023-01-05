@@ -20,6 +20,10 @@
             width: fit-content;
             width: -moz-fit-content;
         }
+
+        .w-200 {
+            min-width: 200px;
+        }
     </style>
     <title><?= $title ?? 'Miku-chan' ?></title>
 </head>

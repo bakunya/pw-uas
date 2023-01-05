@@ -64,7 +64,7 @@ class Register extends CI_Controller
         $this->guess_method('post');
         load_types('User', 'Dosen', 'RpsEmail', 'RpsDate', 'RpsEmail', 'RpsPassword');
 
-        $user = new User($_POST);
+        $user = new User($_POST);   
         $dosen = new Dosen($_POST);
 
         $user->password->value = hashing($user->password->value);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2022 at 07:06 AM
+-- Generation Time: Jan 05, 2023 at 07:54 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `4703_pw_uas`
 --
-CREATE DATABASE IF NOT EXISTS `4703_pw_uas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `4703_pw_uas`;
 
 -- --------------------------------------------------------
 
@@ -33,8 +31,15 @@ CREATE TABLE `dosen` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `nik` int(16) NOT NULL,
-  `nama` int(11) NOT NULL
+  `nama` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dosen`
+--
+
+INSERT INTO `dosen` (`id`, `id_user`, `nik`, `nama`) VALUES
+(2, 2, 2147483647, '0');
 
 -- --------------------------------------------------------
 
@@ -203,6 +208,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `password`) VALUES
+(2, 'miku@mail.com', '$2y$12$iMNvVWwQF9B8OHBszv7xPuKKfgHWztKChpTNpBzczzuUKDKvycSV6');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -307,7 +319,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `dosen`
 --
 ALTER TABLE `dosen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rps`
@@ -379,7 +391,7 @@ ALTER TABLE `rps_unit_pembelajaran`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -389,7 +401,7 @@ ALTER TABLE `user`
 -- Constraints for table `dosen`
 --
 ALTER TABLE `dosen`
-  ADD CONSTRAINT `fk_dosen_on_user` FOREIGN KEY (`id_user`) REFERENCES `dosen` (`id`);
+  ADD CONSTRAINT `fk_dosen_on_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `rps`
