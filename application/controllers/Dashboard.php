@@ -8,6 +8,9 @@ class Dashboard extends CI_Controller
 {
     use forController;
 
+    public ModelData $model_data;
+    public ModelRps $model_rps;
+
     public function __construct()
     {
         parent::__construct();

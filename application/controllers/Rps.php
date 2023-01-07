@@ -36,16 +36,37 @@ class Rps extends CI_Controller
 
         $id = @$_GET['curr_id'];
         $this->guard_empty($id);
-        
-        $rps = $this->model_data->get('rps', ['id' => $id])->result_array();
-        $rps_prasyarat = $this->model_data->get('rps_prasyarat', ['id_rps' => $id])->result_array();
-        $rps_identitas = $this->model_data->get('rps_identitas', ['id_rps' => $id])->result_array();
-        $rps_referensi = $this->model_data->get('rps_referensi', ['id_rps' => $id])->result_array();
-        $rps_gambaran_umum = $this->model_data->get('rps_gambaran_umum', ['id_rps' => $id])->result_array();
-        $rps_unit_pembelajaran = $this->model_data->get('rps_unit_pembelajaran', ['id_rps' => $id])->result_array();
-        $rps_capaian_pembelajaran = $this->model_data->get('rps_capaian_pembelajaran', ['id_rps' => $id])->result_array();
-        $rps_pelaksanaan_pembelajaran = $this->model_data->get('rps_pelaksanaan_pembelajaran', ['id_rps' => $id]);
+
+        $data['rps'] = $this->model_data->get('rps', ['id' => $id])->result_array();
+        $data['rps_prasyarat'] = $this->model_data->get('rps_prasyarat', ['id_rps' => $id])->result_array();
+        $data['rps_identitas'] = $this->model_data->get('rps_identitas', ['id_rps' => $id])->result_array();
+        $data['rps_referensi'] = $this->model_data->get('rps_referensi', ['id_rps' => $id])->result_array();
+        $data['rps_gambaran_umum'] = $this->model_data->get('rps_gambaran_umum', ['id_rps' => $id])->result_array();
+        $data['rps_unit_pembelajaran'] = $this->model_data->get('rps_unit_pembelajaran', ['id_rps' => $id])->result_array();
+        $data['rps_capaian_pembelajaran'] = $this->model_data->get('rps_capaian_pembelajaran', ['id_rps' => $id])->result_array();
+        $data['rps_pelaksanaan_pembelajaran'] = $this->model_data->get('rps_pelaksanaan_pembelajaran', ['id_rps' => $id]);
 
         $rps_tugas_aktivitas = $this->model_data->get('rps_tugas_aktivitas', ['id_rps' => $id])->result_array();
+
+        wrapper(
+            $this->load,
+            'head',
+            function () use ($data) {
+                wrapper(
+                    $this->load,
+                    'container',
+                    function () use ($data) {
+                        $this->load->view('_partials/rps_table_sampul', $data);
+                        wrapper(
+                            $this->load,
+                            'rps_table_main',
+                            function () use ($data) {
+                            }
+                        );
+                    },
+                    [['classname' => 'w-a4-landscape']]
+                );
+            }
+        );
     }
 }

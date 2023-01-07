@@ -24,6 +24,19 @@
         .w-200 {
             min-width: 200px;
         }
+
+        .w-a4-landscape {
+            width: 1123px !important;
+            padding: 10px;
+            margin: auto;
+        }
+
+        @media print {
+            .pagebreak {
+                clear: both;
+                page-break-after: always;
+            }
+        }
     </style>
     <title><?= $title ?? 'Miku-chan' ?></title>
 </head>
