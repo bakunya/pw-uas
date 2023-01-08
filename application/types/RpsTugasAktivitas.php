@@ -8,6 +8,9 @@ class RpsTugasAktivitas
     public string $tugas_aktivitas;
     public string $kemampuan_akhir;
     public string $waktu;
+    public string $bobot;
+    public string $kriteria_penilaian;
+    public string $indikator_penilaian;
 
     public array $blacklists = ['id', 'id_rps', 'blacklists'];
 

@@ -32,9 +32,42 @@
         }
 
         @media print {
+            #print {
+                display: none !important;
+            }
+
             .pagebreak {
                 clear: both;
                 page-break-after: always;
+            }
+
+            * {
+                page-break-inside: avoid;
+            }
+
+            html,
+            body {
+                height: auto;
+                margin: 0;
+            }
+
+            table {
+                page-break-after: auto;
+                border-collapse: collapse;
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto
+            }
+
+            td {
+                page-break-inside: avoid;
+                page-break-after: auto
+            }
+
+            thead {
+                display: table-header-group
             }
         }
     </style>
