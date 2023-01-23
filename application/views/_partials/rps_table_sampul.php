@@ -10,7 +10,7 @@
             <td><img src="<?= base_url('public/logo.jpg') ?>" alt="logo" width="300" class="d-block mx-auto py-2"></td>
         </tr>
         <tr>
-            <td><strong class="h5 m-0 text-center d-block">Mata Kuliah: Bahasa Indonesia (DT090)</strong></td>
+            <td><strong class="h5 m-0 text-center d-block">Mata Kuliah: <?= $rps[0]['matkul'] ?? '' ?> (<?= $rps[0]['kode_matkul'] ?? '' ?>)</strong></td>
         </tr>
         <tr>
             <td><strong class="h5 m-0 text-center d-block">Program Studi: D3 Teknik Informatika</strong></td>
@@ -27,9 +27,9 @@
             <td><span class="text-center d-block m-0">Revisi</span></td>
         </tr>
         <tr>
-            <td><span class="text-center d-block m-0">RPS-DT-090</span></td>
-            <td><span class="text-center d-block m-0">2021</span></td>
-            <td><span class="text-center d-block m-0">20 September 2021</span></td>
+            <td><span class="text-center d-block m-0">RPS-DT-<?= $rps[0]['kode_matkul'] ?? '' ?></span></td>
+            <td><span class="text-center d-block m-0"><?= $rps[0]['tgl_berlaku'] ?? '' ?></span></td>
+            <td><span class="text-center d-block m-0"><?= $rps[0]['tgl_disusun'] ?? '' ?></span></td>
             <td><span class="text-center d-block m-0">00</span></td>
         </tr>
     </tbody>
@@ -67,8 +67,8 @@
             </td>
             <td>
                 <span class="text-center d-block m-0 py-4 signature"></span>
-                <span class="text-center d-block m-0 fw-semibold"><small>Ikmah, M.Kom</small></span>
-                <span class="text-center d-block m-0"><small>NIK. 190302282</small></span>
+                <span class="text-center d-block m-0 fw-semibold"><small><?= $penyusun[0]['nama'] ?? '' ?></small></span>
+                <span class="text-center d-block m-0"><small>NIK. <?= $penyusun[0]['nik'] ?? '' ?></small></span>
             </td>
             <td>
                 <span class="text-center d-block m-0 py-4 signature"></span>

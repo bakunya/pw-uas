@@ -43,6 +43,7 @@ class Rps extends CI_Controller
         $data['gambaran_umum'] = $this->model_data->get('rps_gambaran_umum', ['id_rps' => $id])->result_array();
         $data['dosen'] = $this->model_data->get('dosen', ['id' => ($data['rps'][0]['id_dosen'] ?? 0)])->result_array();
         $data['rps_tugas_aktivitas'] = $this->model_data->get('rps_tugas_aktivitas', ['id_rps' => $id])->result_array();
+        $data['penyusun'] = $this->model_data->get('dosen', ['id' => ($data['rps'][0]['id_penyusun'] ?? 0)])->result_array();
         $data['prasyarat_dan_pengetahuan_awal'] = $this->model_data->get('rps_prasyarat', ['id_rps' => $id])->result_array();
         $data['capaian_pembelajaran'] = $this->model_data->get('rps_capaian_pembelajaran', ['id_rps' => $id])->result_array();
         $data['pembelajaran_secara_spesifik'] = $this->model_data->get('rps_unit_pembelajaran', ['id_rps' => $id])->result_array();

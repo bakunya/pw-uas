@@ -22,7 +22,7 @@
                 </td>
             </tr>
             <tr>
-                <td rowspan="3" class="p-2">Detail Prosentasi Penilaian</td>
+                <td rowspan="3" class="p-2">Detail Presentasi Penilaian</td>
                 <td rowspan="3" class="p-2">
                     <?= $rps[0]['detail_penilaian'] ?? '.' ?>
                 </td>

@@ -9,9 +9,9 @@
                 <br>
                 Program Studi D3 Teknik Informatika
                 <br>
-                <span class="h4 fw-normal">Mata Kuliah Bahasa Indonesia</span>
+                <span class="h4 fw-normal">Mata Kuliah <?= $rps[0]['matkul'] ?? '' ?></span>
                 <br>
-                <span class="h4 fw-normal">DT090</span>
+                <span class="h4 fw-normal">DT<?= $rps[0]['kode_matkul'] ?? '' ?></span>
             </th>
         </tr>
         <tr>
@@ -23,9 +23,9 @@
                 Revisi
             </th>
             <th class="border border-dark fw-normal">
-                RPS-D3TI-DT090
+                RPS-D3TI-DT<?= $rps[0]['kode_matkul'] ?? '' ?>
                 <br>
-                20 September 2021
+                <?= $rps[0]['tgl_disusun'] ?? '' ?>
                 <br>
                 00
             </th>
@@ -35,7 +35,7 @@
                 Halaman
             </th>
             <th class="border border-dark fw-normal">
-                07/10
+                00/00
             </th>
         </tr>
     </thead>
